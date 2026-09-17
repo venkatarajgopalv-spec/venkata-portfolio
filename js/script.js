@@ -1,6 +1,7 @@
 /* ============================================================
    DATA
    ============================================================ */
+
 const PROJECTS = [
   {
     label: "Exhibit A",
@@ -20,6 +21,7 @@ const PROJECTS = [
     skills: ["Economic Analysis", "Research", "Data Analysis", "Excel", "Critical Thinking"],
     pdf: "assets/pdfs/projects/inflation-in-india.pdf"
   },
+
   {
     label: "Exhibit B",
     title: "Horizontal Statement Analysis of Apple",
@@ -35,9 +37,15 @@ const PROJECTS = [
       "Current liabilities rose while long-term liabilities declined — improved long-term debt management.",
       "Apple maintained a strong financial position despite lower shareholders' equity."
     ],
-    skills: ["Financial Statement Analysis", "Balance Sheet Analysis", "Excel", "Critical Thinking"],
+    skills: [
+      "Financial Statement Analysis",
+      "Balance Sheet Analysis",
+      "Excel",
+      "Critical Thinking"
+    ],
     pdf: "assets/pdfs/projects/horizontal-statement-analysis-apple.pdf"
   },
+
   {
     label: "Exhibit C",
     title: "Capital Budgeting Techniques — Infosys Limited",
@@ -53,9 +61,15 @@ const PROJECTS = [
       "DCF supports more accurate project evaluation by considering the time value of money.",
       "Strategic capital allocation and risk analysis drive sustainable growth and shareholder value."
     ],
-    skills: ["Capital Budgeting", "Financial Analysis", "Investment Evaluation", "Corporate Finance"],
+    skills: [
+      "Capital Budgeting",
+      "Financial Analysis",
+      "Investment Evaluation",
+      "Corporate Finance"
+    ],
     pdf: "assets/pdfs/projects/capital-budgeting-infosys.pdf"
   },
+
   {
     label: "Exhibit D",
     title: "ABC Call Volume Trend Analysis",
@@ -71,10 +85,57 @@ const PROJECTS = [
       "Proposed a strategy to reduce the call abandonment rate from 30% to 10%.",
       "Designed a scalable workforce planning model to improve utilisation and satisfaction."
     ],
-    skills: ["Data Analysis", "Excel", "Pivot Tables", "Workforce Planning", "Business Analytics"],
+    skills: [
+      "Data Analysis",
+      "Excel",
+      "Pivot Tables",
+      "Workforce Planning",
+      "Business Analytics"
+    ],
     pdf: "assets/pdfs/projects/abc-call-volume-trend-analysis.pdf"
+  },
+
+  /* ============================================================
+     POWER BI PROJECT
+     ============================================================ */
+
+  {
+    label: "Exhibit E",
+    title: "India Retail Sales Data Analysis Using Microsoft Power BI",
+    overview: "Built an interactive Power BI dashboard to analyse 2,534 India retail transactions covering 2010–2013, focusing on sales, profitability, products, regions, cities, trends, festive periods, metro and non-metro sales, and transaction value.",
+    did: [
+      "Cleaned and transformed retail transaction data using Power Query",
+      "Created data models and a calendar table for time-based analysis",
+      "Developed DAX measures for Total Sales, Total Profit, Total Quantity, Total Transactions, and Average Transaction Value",
+      "Designed interactive dashboards using KPI cards, charts, tables, and slicers"
+    ],
+    insights: [
+      "Analysed sales and profit trends across different years and regions.",
+      "Identified product sub-categories, cities, and product types contributing to sales performance.",
+      "Compared festive vs non-festive and metro vs non-metro sales patterns.",
+      "Examined the relationship between unit price and quantity sold."
+    ],
+    skills: [
+      "Microsoft Power BI",
+      "Power Query",
+      "DAX",
+      "Data Modelling",
+      "Business Analytics",
+      "Data Visualisation"
+    ],
+
+    /* Dashboard image */
+    image: "assets/images/india-retail-power-bi-dashboard.png",
+
+    /* Project report */
+    pdf: "assets/pdfs/projects/india-retail-power-bi-project-report.pdf"
   }
 ];
+
+
+/* ============================================================
+   EXPERIENCE
+   ============================================================ */
 
 const EXPERIENCE = [
   {
@@ -85,6 +146,7 @@ const EXPERIENCE = [
     skills: "Financial Analysis · Business Research · Export Documentation · Business Development",
     pdf: "assets/pdfs/internships/gramtarang-certificate.pdf"
   },
+
   {
     date: "May 2024 – Nov 2024",
     title: "Data Analytics Intern",
@@ -93,6 +155,7 @@ const EXPERIENCE = [
     skills: "Excel · SQL · Python · Data Visualisation",
     pdf: "assets/pdfs/internships/onlei-certificate.pdf"
   },
+
   {
     date: "2024",
     title: "Data Analytics Intern",
@@ -101,6 +164,7 @@ const EXPERIENCE = [
     skills: "SQL · Excel · Business Analytics · Reporting",
     pdf: "assets/pdfs/internships/trainity-certificate.pdf"
   },
+
   {
     date: "Oct 2023 – Dec 2023",
     title: "Management Consulting Fellowship",
@@ -109,6 +173,7 @@ const EXPERIENCE = [
     skills: "Management Consulting · Business Strategy · Case Study Analysis · Guesstimation",
     pdf: "assets/pdfs/certifications/career-edge-fellowship.pdf"
   },
+
   {
     date: "2026",
     title: "Business Insights & Data Visualization",
@@ -119,303 +184,821 @@ const EXPERIENCE = [
   }
 ];
 
+
 /* ============================================================
    RENDER PROJECTS & EXPERIENCE
    ============================================================ */
-function renderExhibits(){
+
+function renderExhibits() {
+
   const root = document.getElementById("exhibits");
+
   if (!root) return;
+
   root.innerHTML = PROJECTS.map((p, i) => `
+
     <article class="exhibit reveal" data-reveal-delay="${(i % 2) * 100}">
+
       <p class="exhibit__label">${p.label}</p>
+
       <h3 class="exhibit__title">${p.title}</h3>
+
+      ${
+        p.image
+          ? `
+            <img
+              src="${p.image}"
+              alt="${p.title} Dashboard"
+              style="
+                width:100%;
+                border-radius:12px;
+                margin:16px 0 20px;
+                display:block;
+              "
+            >
+          `
+          : ""
+      }
+
       <p class="exhibit__overview">${p.overview}</p>
+
       <h5>What I Did</h5>
-      <ul>${p.did.map(d => `<li>${d}</li>`).join("")}</ul>
+
+      <ul>
+        ${p.did.map(d => `<li>${d}</li>`).join("")}
+      </ul>
+
       <h5>Key Insights</h5>
-      <ul>${p.insights.map(i => `<li>${i}</li>`).join("")}</ul>
-      <div class="exhibit__skills">${p.skills.map(s => `<span>${s}</span>`).join("")}</div>
-      <div class="exhibit__footer">
-        <a class="exhibit__link" href="${p.pdf}" target="_blank" rel="noopener">View Full Report (PDF) →</a>
+
+      <ul>
+        ${p.insights.map(i => `<li>${i}</li>`).join("")}
+      </ul>
+
+      <div class="exhibit__skills">
+        ${p.skills.map(s => `<span>${s}</span>`).join("")}
       </div>
+
+      <div class="exhibit__footer">
+
+        <a
+          class="exhibit__link"
+          href="${p.pdf}"
+          target="_blank"
+          rel="noopener"
+        >
+          View Full Report (PDF) →
+        </a>
+
+      </div>
+
     </article>
+
   `).join("");
+
   observeReveals(root.querySelectorAll(".reveal"));
 }
 
-function renderTimeline(){
+
+function renderTimeline() {
+
   const root = document.getElementById("timeline");
+
   if (!root) return;
+
   root.innerHTML = EXPERIENCE.map(e => `
+
     <div class="timeline-item">
-      <div class="timeline-item__date">${e.date}</div>
-      <div>
-        <h3 class="timeline-item__title">${e.title}</h3>
-        <p class="timeline-item__org">${e.org}</p>
-        <p class="timeline-item__desc">${e.desc}</p>
-        <p class="timeline-item__skills">${e.skills}</p>
+
+      <div class="timeline-item__date">
+        ${e.date}
       </div>
-      <a class="timeline-item__link" href="${e.pdf}" target="_blank" rel="noopener">View Certificate</a>
+
+      <div>
+
+        <h3 class="timeline-item__title">
+          ${e.title}
+        </h3>
+
+        <p class="timeline-item__org">
+          ${e.org}
+        </p>
+
+        <p class="timeline-item__desc">
+          ${e.desc}
+        </p>
+
+        <p class="timeline-item__skills">
+          ${e.skills}
+        </p>
+
+      </div>
+
+      <a
+        class="timeline-item__link"
+        href="${e.pdf}"
+        target="_blank"
+        rel="noopener"
+      >
+        View Certificate
+      </a>
+
     </div>
+
   `).join("");
+
   observeReveals(root.querySelectorAll(".timeline-item"));
 }
 
+
 /* ============================================================
-   SCROLL REVEAL (IntersectionObserver)
+   SCROLL REVEAL
    ============================================================ */
+
 let revealObserver;
-function getRevealObserver(){
+
+function getRevealObserver() {
+
   if (revealObserver) return revealObserver;
+
   revealObserver = new IntersectionObserver((entries) => {
+
     entries.forEach(entry => {
-      if (entry.isIntersecting){
+
+      if (entry.isIntersecting) {
+
         const el = entry.target;
-        const delay = parseInt(el.getAttribute("data-reveal-delay") || "0", 10);
-        setTimeout(() => el.classList.add("is-visible"), delay);
+
+        const delay = parseInt(
+          el.getAttribute("data-reveal-delay") || "0",
+          10
+        );
+
+        setTimeout(() => {
+          el.classList.add("is-visible");
+        }, delay);
+
         revealObserver.unobserve(el);
+
       }
+
     });
-  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+  }, {
+    threshold: 0.15,
+    rootMargin: "0px 0px -40px 0px"
+  });
+
   return revealObserver;
 }
-function observeReveals(nodeList){
+
+
+function observeReveals(nodeList) {
+
   const obs = getRevealObserver();
+
   nodeList.forEach(el => obs.observe(el));
-}
-function initRevealAll(){
-  observeReveals(document.querySelectorAll(".reveal:not(#exhibits .reveal):not(#timeline .timeline-item)"));
+
 }
 
+
+function initRevealAll() {
+
+  observeReveals(
+    document.querySelectorAll(
+      ".reveal:not(#exhibits .reveal):not(#timeline .timeline-item)"
+    )
+  );
+
+}
+
+
 /* ============================================================
-   COUNTER ANIMATION (stats strip)
+   COUNTER ANIMATION
    ============================================================ */
-function initCounters(){
+
+function initCounters() {
+
   const nums = document.querySelectorAll(".stat__num");
+
   if (!nums.length) return;
+
   const obs = new IntersectionObserver((entries) => {
+
     entries.forEach(entry => {
+
       if (!entry.isIntersecting) return;
+
       const el = entry.target;
-      const target = parseInt(el.getAttribute("data-count"), 10) || 0;
+
+      const target =
+        parseInt(el.getAttribute("data-count"), 10) || 0;
+
       const duration = 900;
+
       const start = performance.now();
-      function tick(now){
-        const p = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = Math.round(eased * target);
-        if (p < 1) requestAnimationFrame(tick);
+
+      function tick(now) {
+
+        const p = Math.min(
+          (now - start) / duration,
+          1
+        );
+
+        const eased =
+          1 - Math.pow(1 - p, 3);
+
+        el.textContent =
+          Math.round(eased * target);
+
+        if (p < 1) {
+          requestAnimationFrame(tick);
+        }
+
       }
+
       requestAnimationFrame(tick);
+
       obs.unobserve(el);
+
     });
-  }, { threshold: 0.4 });
+
+  }, {
+    threshold: 0.4
+  });
+
   nums.forEach(el => obs.observe(el));
+
 }
 
+
 /* ============================================================
-   TYPEWRITER (hero role line)
+   TYPEWRITER
    ============================================================ */
-function initTypewriter(){
+
+function initTypewriter() {
+
   const el = document.getElementById("typewriter");
+
   if (!el) return;
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const prefersReduced =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
   const phrases = [
     "MBA Candidate",
     "Management Professional",
     "Finance & Strategy Enthusiast",
     "Aspiring Business Leader"
   ];
-  if (prefersReduced){
+
+  if (prefersReduced) {
+
     el.textContent = phrases[0];
+
     return;
   }
-  let pIdx = 0, cIdx = 0, deleting = false;
-  function step(){
+
+  let pIdx = 0;
+  let cIdx = 0;
+  let deleting = false;
+
+  function step() {
+
     const phrase = phrases[pIdx];
-    if (!deleting){
+
+    if (!deleting) {
+
       cIdx++;
-      el.textContent = phrase.slice(0, cIdx);
-      if (cIdx === phrase.length){
+
+      el.textContent =
+        phrase.slice(0, cIdx);
+
+      if (cIdx === phrase.length) {
+
         deleting = true;
+
         setTimeout(step, 1400);
+
         return;
       }
+
     } else {
+
       cIdx--;
-      el.textContent = phrase.slice(0, cIdx);
-      if (cIdx === 0){
+
+      el.textContent =
+        phrase.slice(0, cIdx);
+
+      if (cIdx === 0) {
+
         deleting = false;
-        pIdx = (pIdx + 1) % phrases.length;
+
+        pIdx =
+          (pIdx + 1) % phrases.length;
       }
     }
-    setTimeout(step, deleting ? 35 : 55);
+
+    setTimeout(
+      step,
+      deleting ? 35 : 55
+    );
+
   }
+
   step();
+
 }
+
 
 /* ============================================================
    HERO NETWORK CANVAS
    ============================================================ */
-function initHeroCanvas(){
-  const canvas = document.getElementById("heroCanvas");
+
+function initHeroCanvas() {
+
+  const canvas =
+    document.getElementById("heroCanvas");
+
   if (!canvas) return;
-  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const ctx = canvas.getContext("2d");
+
+  const prefersReduced =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+  const ctx =
+    canvas.getContext("2d");
+
   let w, h, points;
+
   const COUNT_BASE = 46;
 
-  function resize(){
-    const hero = canvas.closest(".hero");
-    w = canvas.width = hero.offsetWidth;
-    h = canvas.height = hero.offsetHeight;
-    const count = Math.round((w / 1200) * COUNT_BASE) + 18;
-    points = Array.from({ length: count }, () => ({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.25,
-      vy: (Math.random() - 0.5) * 0.25
-    }));
+
+  function resize() {
+
+    const hero =
+      canvas.closest(".hero");
+
+    w =
+      canvas.width =
+      hero.offsetWidth;
+
+    h =
+      canvas.height =
+      hero.offsetHeight;
+
+    const count =
+      Math.round(
+        (w / 1200) * COUNT_BASE
+      ) + 18;
+
+    points =
+      Array.from(
+        { length: count },
+        () => ({
+
+          x: Math.random() * w,
+
+          y: Math.random() * h,
+
+          vx:
+            (Math.random() - 0.5) * 0.25,
+
+          vy:
+            (Math.random() - 0.5) * 0.25
+
+        })
+      );
+
   }
 
-  function draw(){
-    ctx.clearRect(0, 0, w, h);
-    for (const p of points){
-      p.x += p.vx; p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-    }
-    for (let i = 0; i < points.length; i++){
-      for (let j = i + 1; j < points.length; j++){
-        const dx = points[i].x - points[j].x;
-        const dy = points[i].y - points[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 140){
-          ctx.strokeStyle = `rgba(232,163,61,${0.12 * (1 - dist / 140)})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(points[i].x, points[i].y);
-          ctx.lineTo(points[j].x, points[j].y);
-          ctx.stroke();
-        }
+
+  function draw() {
+
+    ctx.clearRect(
+      0,
+      0,
+      w,
+      h
+    );
+
+
+    for (const p of points) {
+
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (
+        p.x < 0 ||
+        p.x > w
+      ) {
+        p.vx *= -1;
       }
+
+      if (
+        p.y < 0 ||
+        p.y > h
+      ) {
+        p.vy *= -1;
+      }
+
     }
-    for (const p of points){
-      ctx.fillStyle = "rgba(79,191,184,0.55)";
+
+
+    for (
+      let i = 0;
+      i < points.length;
+      i++
+    ) {
+
+      for (
+        let j = i + 1;
+        j < points.length;
+        j++
+      ) {
+
+        const dx =
+          points[i].x -
+          points[j].x;
+
+        const dy =
+          points[i].y -
+          points[j].y;
+
+        const dist =
+          Math.sqrt(
+            dx * dx +
+            dy * dy
+          );
+
+        if (dist < 140) {
+
+          ctx.strokeStyle =
+            `rgba(232,163,61,${
+              0.12 *
+              (1 - dist / 140)
+            })`;
+
+          ctx.lineWidth = 1;
+
+          ctx.beginPath();
+
+          ctx.moveTo(
+            points[i].x,
+            points[i].y
+          );
+
+          ctx.lineTo(
+            points[j].x,
+            points[j].y
+          );
+
+          ctx.stroke();
+
+        }
+
+      }
+
+    }
+
+
+    for (const p of points) {
+
+      ctx.fillStyle =
+        "rgba(79,191,184,0.55)";
+
       ctx.beginPath();
-      ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
+
+      ctx.arc(
+        p.x,
+        p.y,
+        1.6,
+        0,
+        Math.PI * 2
+      );
+
       ctx.fill();
+
     }
-    if (!prefersReduced) requestAnimationFrame(draw);
+
+
+    if (!prefersReduced) {
+
+      requestAnimationFrame(draw);
+
+    }
+
   }
+
 
   resize();
-  window.addEventListener("resize", resize);
+
+  window.addEventListener(
+    "resize",
+    resize
+  );
+
   draw();
-  if (prefersReduced) draw(); // draw a single static frame
+
+  if (prefersReduced) {
+    draw();
+  }
+
 }
 
+
 /* ============================================================
-   PDF LINK HANDLING (works around browsers blocking data: URI
-   navigation — converts embedded PDFs to blob URLs at click time)
+   PDF LINK HANDLING
    ============================================================ */
-function dataUriToBlobUrl(dataUri){
-  const [, base64] = dataUri.split(",");
-  const binary = atob(base64);
-  const bytes = new Uint8Array(binary.length);
-  for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-  const blob = new Blob([bytes], { type: "application/pdf" });
-  return URL.createObjectURL(blob);
-}
-function initPdfLinks(){
-  document.querySelectorAll(".exhibit__link, .timeline-item__link").forEach(a => {
-    a.addEventListener("click", function(e){
-      const href = this.getAttribute("href");
-      if (href && href.startsWith("data:application/pdf")){
-        e.preventDefault();
-        window.open(dataUriToBlobUrl(href), "_blank");
+
+function dataUriToBlobUrl(dataUri) {
+
+  const [, base64] =
+    dataUri.split(",");
+
+  const binary =
+    atob(base64);
+
+  const bytes =
+    new Uint8Array(
+      binary.length
+    );
+
+  for (
+    let i = 0;
+    i < binary.length;
+    i++
+  ) {
+
+    bytes[i] =
+      binary.charCodeAt(i);
+
+  }
+
+  const blob =
+    new Blob(
+      [bytes],
+      {
+        type: "application/pdf"
       }
-      // otherwise it's a normal relative path — default navigation just works
-    });
-  });
+    );
+
+  return URL.createObjectURL(blob);
+
 }
+
+
+function initPdfLinks() {
+
+  document
+    .querySelectorAll(
+      ".exhibit__link, .timeline-item__link"
+    )
+    .forEach(a => {
+
+      a.addEventListener(
+        "click",
+        function(e) {
+
+          const href =
+            this.getAttribute("href");
+
+          if (
+            href &&
+            href.startsWith(
+              "data:application/pdf"
+            )
+          ) {
+
+            e.preventDefault();
+
+            window.open(
+              dataUriToBlobUrl(href),
+              "_blank"
+            );
+
+          }
+
+          /*
+            Normal PDF paths continue to work
+            normally.
+          */
+
+        }
+      );
+
+    });
+
+}
+
 
 /* ============================================================
    MOBILE NAV
    ============================================================ */
-function initNav(){
-  const toggle = document.getElementById("navToggle");
-  const nav = document.getElementById("nav");
+
+function initNav() {
+
+  const toggle =
+    document.getElementById("navToggle");
+
+  const nav =
+    document.getElementById("nav");
+
   if (!toggle || !nav) return;
-  toggle.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", String(isOpen));
-  });
-  nav.querySelectorAll("a").forEach(a => {
-    a.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      toggle.setAttribute("aria-expanded", "false");
+
+  toggle.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        nav.classList.toggle(
+          "is-open"
+        );
+
+      toggle.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+
+    }
+  );
+
+
+  nav
+    .querySelectorAll("a")
+    .forEach(a => {
+
+      a.addEventListener(
+        "click",
+        () => {
+
+          nav.classList.remove(
+            "is-open"
+          );
+
+          toggle.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+        }
+      );
+
     });
-  });
+
 }
+
 
 /* ============================================================
-   CONTACT FORM (Formspree)
+   CONTACT FORM
    ============================================================ */
-function initForm(){
-  const form = document.getElementById("contactForm");
-  const status = document.getElementById("formStatus");
+
+function initForm() {
+
+  const form =
+    document.getElementById(
+      "contactForm"
+    );
+
+  const status =
+    document.getElementById(
+      "formStatus"
+    );
+
   if (!form) return;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
 
-    if (form.action.includes("YOUR_FORM_ID")) {
-      status.textContent = "Form isn't connected yet — see setup instructions in the README.";
-      return;
-    }
+  form.addEventListener(
+    "submit",
+    async (e) => {
 
-    const submitBtn = form.querySelector("button[type=submit]");
-    submitBtn.disabled = true;
-    status.textContent = "Sending…";
+      e.preventDefault();
 
-    try {
-      const res = await fetch(form.action, {
-        method: "POST",
-        body: new FormData(form),
-        headers: { "Accept": "application/json" }
-      });
-      if (res.ok) {
-        status.textContent = "Message sent — thank you! I'll get back to you soon.";
-        form.reset();
-      } else {
-        status.textContent = "Something went wrong. Please email me directly instead.";
+
+      if (
+        form.action.includes(
+          "YOUR_FORM_ID"
+        )
+      ) {
+
+        status.textContent =
+          "Form isn't connected yet — please connect Formspree.";
+
+        return;
+
       }
-    } catch (err) {
-      status.textContent = "Network error — please email me directly instead.";
-    } finally {
-      submitBtn.disabled = false;
+
+
+      const submitBtn =
+        form.querySelector(
+          "button[type=submit]"
+        );
+
+      submitBtn.disabled = true;
+
+      status.textContent =
+        "Sending…";
+
+
+      try {
+
+        const res =
+          await fetch(
+            form.action,
+            {
+              method: "POST",
+              body:
+                new FormData(form),
+              headers: {
+                "Accept":
+                  "application/json"
+              }
+            }
+          );
+
+
+        if (res.ok) {
+
+          status.textContent =
+            "Message sent — thank you! I'll get back to you soon.";
+
+          form.reset();
+
+        } else {
+
+          status.textContent =
+            "Something went wrong. Please email me directly instead.";
+
+        }
+
+
+      } catch (err) {
+
+        status.textContent =
+          "Network error — please email me directly instead.";
+
+      } finally {
+
+        submitBtn.disabled = false;
+
+      }
+
     }
-  });
+  );
+
 }
+
 
 /* ============================================================
    MISC
    ============================================================ */
-function setYear(){
-  const el = document.getElementById("year");
-  if (el) el.textContent = new Date().getFullYear();
+
+function setYear() {
+
+  const el =
+    document.getElementById(
+      "year"
+    );
+
+  if (el) {
+
+    el.textContent =
+      new Date().getFullYear();
+
+  }
+
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderExhibits();
-  renderTimeline();
-  initPdfLinks();
-  initRevealAll();
-  initCounters();
-  initTypewriter();
-  initHeroCanvas();
-  initNav();
-  initForm();
-  setYear();
-});
+
+/* ============================================================
+   INITIALISE WEBSITE
+   ============================================================ */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    renderExhibits();
+
+    renderTimeline();
+
+    initPdfLinks();
+
+    initRevealAll();
+
+    initCounters();
+
+    initTypewriter();
+
+    initHeroCanvas();
+
+    initNav();
+
+    initForm();
+
+    setYear();
+
+  }
+);
