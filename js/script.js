@@ -95,10 +95,6 @@ const PROJECTS = [
     pdf: "assets/pdfs/projects/abc-call-volume-trend-analysis.pdf"
   },
 
-  /* ============================================================
-     POWER BI PROJECT
-     ============================================================ */
-
   {
     label: "Exhibit E",
     title: "India Retail Sales Data Analysis Using Microsoft Power BI",
@@ -123,12 +119,8 @@ const PROJECTS = [
       "Business Analytics",
       "Data Visualisation"
     ],
-
-    /* Dashboard image */
-    image: "assets/images/india-retail-power-bi-dashboard.png",
-
-    /* Project report */
-    pdf: "assets/pdfs/projects/india-retail-power-bi-project-report.pdf"
+    image: "assets/images/Project.png",
+    pdf: "assets/pdfs/projects/POWER BI PROJECT REPORT.pdf"
   }
 ];
 
@@ -186,10 +178,10 @@ const EXPERIENCE = [
 
 
 /* ============================================================
-   RENDER PROJECTS & EXPERIENCE
+   PROJECT RENDERING
    ============================================================ */
 
-function renderExhibits() {
+function renderExhibits(){
 
   const root = document.getElementById("exhibits");
 
@@ -197,45 +189,61 @@ function renderExhibits() {
 
   root.innerHTML = PROJECTS.map((p, i) => `
 
-    <article class="exhibit reveal" data-reveal-delay="${(i % 2) * 100}">
+    <article
+      class="exhibit reveal"
+      data-reveal-delay="${(i % 2) * 100}"
+    >
 
-      <p class="exhibit__label">${p.label}</p>
+      <p class="exhibit__label">
+        ${p.label}
+      </p>
 
-      <h3 class="exhibit__title">${p.title}</h3>
+      <h3 class="exhibit__title">
+        ${p.title}
+      </h3>
 
       ${
         p.image
           ? `
-            <img
-              src="${p.image}"
-              alt="${p.title} Dashboard"
-              style="
-                width:100%;
-                border-radius:12px;
-                margin:16px 0 20px;
-                display:block;
-              "
-            >
+            <div class="project-image-wrap">
+
+              <img
+                src="${p.image}"
+                alt="${p.title} Dashboard"
+                loading="lazy"
+              >
+
+            </div>
           `
           : ""
       }
 
-      <p class="exhibit__overview">${p.overview}</p>
+      <p class="exhibit__overview">
+        ${p.overview}
+      </p>
 
-      <h5>What I Did</h5>
+      <h5>
+        What I Did
+      </h5>
 
       <ul>
         ${p.did.map(d => `<li>${d}</li>`).join("")}
       </ul>
 
-      <h5>Key Insights</h5>
+      <h5>
+        Key Insights
+      </h5>
 
       <ul>
         ${p.insights.map(i => `<li>${i}</li>`).join("")}
       </ul>
 
       <div class="exhibit__skills">
-        ${p.skills.map(s => `<span>${s}</span>`).join("")}
+
+        ${p.skills
+          .map(s => `<span>${s}</span>`)
+          .join("")}
+
       </div>
 
       <div class="exhibit__footer">
@@ -255,58 +263,70 @@ function renderExhibits() {
 
   `).join("");
 
-  observeReveals(root.querySelectorAll(".reveal"));
+  observeReveals(
+    root.querySelectorAll(".reveal")
+  );
+
 }
 
 
-function renderTimeline() {
+/* ============================================================
+   EXPERIENCE RENDERING
+   ============================================================ */
 
-  const root = document.getElementById("timeline");
+function renderTimeline(){
+
+  const root =
+    document.getElementById("timeline");
 
   if (!root) return;
 
-  root.innerHTML = EXPERIENCE.map(e => `
+  root.innerHTML =
+    EXPERIENCE.map(e => `
 
-    <div class="timeline-item">
+      <div class="timeline-item">
 
-      <div class="timeline-item__date">
-        ${e.date}
+        <div class="timeline-item__date">
+          ${e.date}
+        </div>
+
+        <div>
+
+          <h3 class="timeline-item__title">
+            ${e.title}
+          </h3>
+
+          <p class="timeline-item__org">
+            ${e.org}
+          </p>
+
+          <p class="timeline-item__desc">
+            ${e.desc}
+          </p>
+
+          <p class="timeline-item__skills">
+            ${e.skills}
+          </p>
+
+        </div>
+
+        <a
+          class="timeline-item__link"
+          href="${e.pdf}"
+          target="_blank"
+          rel="noopener"
+        >
+          View Certificate
+        </a>
+
       </div>
 
-      <div>
+    `).join("");
 
-        <h3 class="timeline-item__title">
-          ${e.title}
-        </h3>
+  observeReveals(
+    root.querySelectorAll(".timeline-item")
+  );
 
-        <p class="timeline-item__org">
-          ${e.org}
-        </p>
-
-        <p class="timeline-item__desc">
-          ${e.desc}
-        </p>
-
-        <p class="timeline-item__skills">
-          ${e.skills}
-        </p>
-
-      </div>
-
-      <a
-        class="timeline-item__link"
-        href="${e.pdf}"
-        target="_blank"
-        rel="noopener"
-      >
-        View Certificate
-      </a>
-
-    </div>
-
-  `).join("");
-
-  observeReveals(root.querySelectorAll(".timeline-item"));
 }
 
 
@@ -316,52 +336,68 @@ function renderTimeline() {
 
 let revealObserver;
 
-function getRevealObserver() {
+function getRevealObserver(){
 
-  if (revealObserver) return revealObserver;
+  if (revealObserver)
+    return revealObserver;
 
-  revealObserver = new IntersectionObserver((entries) => {
+  revealObserver =
+    new IntersectionObserver(
+      (entries) => {
 
-    entries.forEach(entry => {
+        entries.forEach(entry => {
 
-      if (entry.isIntersecting) {
+          if (!entry.isIntersecting)
+            return;
 
-        const el = entry.target;
+          const el =
+            entry.target;
 
-        const delay = parseInt(
-          el.getAttribute("data-reveal-delay") || "0",
-          10
-        );
+          const delay =
+            parseInt(
+              el.getAttribute(
+                "data-reveal-delay"
+              ) || "0",
+              10
+            );
 
-        setTimeout(() => {
-          el.classList.add("is-visible");
-        }, delay);
+          setTimeout(() => {
 
-        revealObserver.unobserve(el);
+            el.classList.add(
+              "is-visible"
+            );
 
+          }, delay);
+
+          revealObserver.unobserve(el);
+
+        });
+
+      },
+      {
+        threshold:0.12,
+        rootMargin:"0px 0px -50px 0px"
       }
-
-    });
-
-  }, {
-    threshold: 0.15,
-    rootMargin: "0px 0px -40px 0px"
-  });
+    );
 
   return revealObserver;
-}
-
-
-function observeReveals(nodeList) {
-
-  const obs = getRevealObserver();
-
-  nodeList.forEach(el => obs.observe(el));
 
 }
 
 
-function initRevealAll() {
+function observeReveals(nodeList){
+
+  const obs =
+    getRevealObserver();
+
+  nodeList.forEach(
+    el => obs.observe(el)
+  );
+
+}
+
+
+function initRevealAll(){
 
   observeReveals(
     document.querySelectorAll(
@@ -376,57 +412,89 @@ function initRevealAll() {
    COUNTER ANIMATION
    ============================================================ */
 
-function initCounters() {
+function initCounters(){
 
-  const nums = document.querySelectorAll(".stat__num");
+  const nums =
+    document.querySelectorAll(
+      ".stat__num"
+    );
 
-  if (!nums.length) return;
+  if (!nums.length)
+    return;
 
-  const obs = new IntersectionObserver((entries) => {
+  const obs =
+    new IntersectionObserver(
+      entries => {
 
-    entries.forEach(entry => {
+        entries.forEach(entry => {
 
-      if (!entry.isIntersecting) return;
+          if (!entry.isIntersecting)
+            return;
 
-      const el = entry.target;
+          const el =
+            entry.target;
 
-      const target =
-        parseInt(el.getAttribute("data-count"), 10) || 0;
+          const target =
+            parseInt(
+              el.getAttribute(
+                "data-count"
+              ),
+              10
+            ) || 0;
 
-      const duration = 900;
+          const duration = 1100;
 
-      const start = performance.now();
+          const start =
+            performance.now();
 
-      function tick(now) {
+          function tick(now){
 
-        const p = Math.min(
-          (now - start) / duration,
-          1
-        );
+            const progress =
+              Math.min(
+                (now - start) /
+                duration,
+                1
+              );
 
-        const eased =
-          1 - Math.pow(1 - p, 3);
+            const eased =
+              1 -
+              Math.pow(
+                1 - progress,
+                3
+              );
 
-        el.textContent =
-          Math.round(eased * target);
+            el.textContent =
+              Math.round(
+                eased * target
+              );
 
-        if (p < 1) {
-          requestAnimationFrame(tick);
-        }
+            if (progress < 1){
 
+              requestAnimationFrame(
+                tick
+              );
+
+            }
+
+          }
+
+          requestAnimationFrame(
+            tick
+          );
+
+          obs.unobserve(el);
+
+        });
+
+      },
+      {
+        threshold:0.4
       }
+    );
 
-      requestAnimationFrame(tick);
-
-      obs.unobserve(el);
-
-    });
-
-  }, {
-    threshold: 0.4
-  });
-
-  nums.forEach(el => obs.observe(el));
+  nums.forEach(
+    el => obs.observe(el)
+  );
 
 }
 
@@ -435,11 +503,15 @@ function initCounters() {
    TYPEWRITER
    ============================================================ */
 
-function initTypewriter() {
+function initTypewriter(){
 
-  const el = document.getElementById("typewriter");
+  const el =
+    document.getElementById(
+      "typewriter"
+    );
 
-  if (!el) return;
+  if (!el)
+    return;
 
   const prefersReduced =
     window.matchMedia(
@@ -453,51 +525,70 @@ function initTypewriter() {
     "Aspiring Business Leader"
   ];
 
-  if (prefersReduced) {
+  if (prefersReduced){
 
-    el.textContent = phrases[0];
+    el.textContent =
+      phrases[0];
 
     return;
+
   }
 
   let pIdx = 0;
   let cIdx = 0;
   let deleting = false;
 
-  function step() {
+  function step(){
 
-    const phrase = phrases[pIdx];
+    const phrase =
+      phrases[pIdx];
 
-    if (!deleting) {
+    if (!deleting){
 
       cIdx++;
 
       el.textContent =
-        phrase.slice(0, cIdx);
+        phrase.slice(
+          0,
+          cIdx
+        );
 
-      if (cIdx === phrase.length) {
+      if (
+        cIdx ===
+        phrase.length
+      ){
 
         deleting = true;
 
-        setTimeout(step, 1400);
+        setTimeout(
+          step,
+          1400
+        );
 
         return;
+
       }
 
-    } else {
+    }else{
 
       cIdx--;
 
       el.textContent =
-        phrase.slice(0, cIdx);
+        phrase.slice(
+          0,
+          cIdx
+        );
 
-      if (cIdx === 0) {
+      if (cIdx === 0){
 
         deleting = false;
 
         pIdx =
-          (pIdx + 1) % phrases.length;
+          (pIdx + 1) %
+          phrases.length;
+
       }
+
     }
 
     setTimeout(
@@ -516,12 +607,15 @@ function initTypewriter() {
    HERO NETWORK CANVAS
    ============================================================ */
 
-function initHeroCanvas() {
+function initHeroCanvas(){
 
   const canvas =
-    document.getElementById("heroCanvas");
+    document.getElementById(
+      "heroCanvas"
+    );
 
-  if (!canvas) return;
+  if (!canvas)
+    return;
 
   const prefersReduced =
     window.matchMedia(
@@ -531,15 +625,20 @@ function initHeroCanvas() {
   const ctx =
     canvas.getContext("2d");
 
-  let w, h, points;
+  let w;
+  let h;
+  let points;
 
   const COUNT_BASE = 46;
 
 
-  function resize() {
+  function resize(){
 
     const hero =
       canvas.closest(".hero");
+
+    if (!hero)
+      return;
 
     w =
       canvas.width =
@@ -551,23 +650,30 @@ function initHeroCanvas() {
 
     const count =
       Math.round(
-        (w / 1200) * COUNT_BASE
+        (w / 1200) *
+        COUNT_BASE
       ) + 18;
 
     points =
       Array.from(
-        { length: count },
+        {
+          length:count
+        },
         () => ({
 
-          x: Math.random() * w,
+          x:
+            Math.random() * w,
 
-          y: Math.random() * h,
+          y:
+            Math.random() * h,
 
           vx:
-            (Math.random() - 0.5) * 0.25,
+            (Math.random() - .5)
+            * .25,
 
           vy:
-            (Math.random() - 0.5) * 0.25
+            (Math.random() - .5)
+            * .25
 
         })
       );
@@ -575,7 +681,10 @@ function initHeroCanvas() {
   }
 
 
-  function draw() {
+  function draw(){
+
+    if (!points)
+      return;
 
     ctx.clearRect(
       0,
@@ -585,7 +694,7 @@ function initHeroCanvas() {
     );
 
 
-    for (const p of points) {
+    for (const p of points){
 
       p.x += p.vx;
       p.y += p.vy;
@@ -593,15 +702,19 @@ function initHeroCanvas() {
       if (
         p.x < 0 ||
         p.x > w
-      ) {
+      ){
+
         p.vx *= -1;
+
       }
 
       if (
         p.y < 0 ||
         p.y > h
-      ) {
+      ){
+
         p.vy *= -1;
+
       }
 
     }
@@ -611,13 +724,13 @@ function initHeroCanvas() {
       let i = 0;
       i < points.length;
       i++
-    ) {
+    ){
 
       for (
         let j = i + 1;
         j < points.length;
         j++
-      ) {
+      ){
 
         const dx =
           points[i].x -
@@ -633,13 +746,16 @@ function initHeroCanvas() {
             dy * dy
           );
 
-        if (dist < 140) {
+        if (dist < 140){
 
           ctx.strokeStyle =
-            `rgba(232,163,61,${
-              0.12 *
-              (1 - dist / 140)
-            })`;
+            `rgba(
+              232,
+              163,
+              61,
+              ${0.12 *
+              (1 - dist / 140)}
+            )`;
 
           ctx.lineWidth = 1;
 
@@ -664,7 +780,7 @@ function initHeroCanvas() {
     }
 
 
-    for (const p of points) {
+    for (const p of points){
 
       ctx.fillStyle =
         "rgba(79,191,184,0.55)";
@@ -684,9 +800,11 @@ function initHeroCanvas() {
     }
 
 
-    if (!prefersReduced) {
+    if (!prefersReduced){
 
-      requestAnimationFrame(draw);
+      requestAnimationFrame(
+        draw
+      );
 
     }
 
@@ -702,18 +820,14 @@ function initHeroCanvas() {
 
   draw();
 
-  if (prefersReduced) {
-    draw();
-  }
-
 }
 
 
 /* ============================================================
-   PDF LINK HANDLING
+   PDF LINKS
    ============================================================ */
 
-function dataUriToBlobUrl(dataUri) {
+function dataUriToBlobUrl(dataUri){
 
   const [, base64] =
     dataUri.split(",");
@@ -730,7 +844,7 @@ function dataUriToBlobUrl(dataUri) {
     let i = 0;
     i < binary.length;
     i++
-  ) {
+  ){
 
     bytes[i] =
       binary.charCodeAt(i);
@@ -741,16 +855,18 @@ function dataUriToBlobUrl(dataUri) {
     new Blob(
       [bytes],
       {
-        type: "application/pdf"
+        type:"application/pdf"
       }
     );
 
-  return URL.createObjectURL(blob);
+  return URL.createObjectURL(
+    blob
+  );
 
 }
 
 
-function initPdfLinks() {
+function initPdfLinks(){
 
   document
     .querySelectorAll(
@@ -760,31 +876,30 @@ function initPdfLinks() {
 
       a.addEventListener(
         "click",
-        function(e) {
+        function(e){
 
           const href =
-            this.getAttribute("href");
+            this.getAttribute(
+              "href"
+            );
 
           if (
             href &&
             href.startsWith(
               "data:application/pdf"
             )
-          ) {
+          ){
 
             e.preventDefault();
 
             window.open(
-              dataUriToBlobUrl(href),
+              dataUriToBlobUrl(
+                href
+              ),
               "_blank"
             );
 
           }
-
-          /*
-            Normal PDF paths continue to work
-            normally.
-          */
 
         }
       );
@@ -795,18 +910,23 @@ function initPdfLinks() {
 
 
 /* ============================================================
-   MOBILE NAV
+   MOBILE NAVIGATION
    ============================================================ */
 
-function initNav() {
+function initNav(){
 
   const toggle =
-    document.getElementById("navToggle");
+    document.getElementById(
+      "navToggle"
+    );
 
   const nav =
-    document.getElementById("nav");
+    document.getElementById(
+      "nav"
+    );
 
-  if (!toggle || !nav) return;
+  if (!toggle || !nav)
+    return;
 
   toggle.addEventListener(
     "click",
@@ -855,7 +975,7 @@ function initNav() {
    CONTACT FORM
    ============================================================ */
 
-function initForm() {
+function initForm(){
 
   const form =
     document.getElementById(
@@ -867,7 +987,8 @@ function initForm() {
       "formStatus"
     );
 
-  if (!form) return;
+  if (!form)
+    return;
 
 
   form.addEventListener(
@@ -881,7 +1002,7 @@ function initForm() {
         form.action.includes(
           "YOUR_FORM_ID"
         )
-      ) {
+      ){
 
         status.textContent =
           "Form isn't connected yet — please connect Formspree.";
@@ -902,16 +1023,18 @@ function initForm() {
         "Sending…";
 
 
-      try {
+      try{
 
         const res =
           await fetch(
             form.action,
             {
-              method: "POST",
+              method:"POST",
+
               body:
                 new FormData(form),
-              headers: {
+
+              headers:{
                 "Accept":
                   "application/json"
               }
@@ -919,27 +1042,26 @@ function initForm() {
           );
 
 
-        if (res.ok) {
+        if (res.ok){
 
           status.textContent =
             "Message sent — thank you! I'll get back to you soon.";
 
           form.reset();
 
-        } else {
+        }else{
 
           status.textContent =
             "Something went wrong. Please email me directly instead.";
 
         }
 
-
-      } catch (err) {
+      }catch(err){
 
         status.textContent =
           "Network error — please email me directly instead.";
 
-      } finally {
+      }finally{
 
         submitBtn.disabled = false;
 
@@ -955,14 +1077,14 @@ function initForm() {
    MISC
    ============================================================ */
 
-function setYear() {
+function setYear(){
 
   const el =
     document.getElementById(
       "year"
     );
 
-  if (el) {
+  if (el){
 
     el.textContent =
       new Date().getFullYear();
@@ -973,7 +1095,7 @@ function setYear() {
 
 
 /* ============================================================
-   INITIALISE WEBSITE
+   INITIALISE
    ============================================================ */
 
 document.addEventListener(
