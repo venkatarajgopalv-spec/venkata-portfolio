@@ -1172,3 +1172,50 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .intro-visual{animation:none;display:none}
   .nav-transition{display:none}
 }
+
+/* ============================================================
+   BUTTON-TO-BUTTON CINEMATIC TRANSITIONS
+   ============================================================ */
+.btn{
+  cursor:pointer;
+  transition:
+    transform .28s cubic-bezier(.16,1,.3,1),
+    box-shadow .28s ease,
+    border-color .28s ease,
+    background-color .28s ease;
+}
+.btn:hover{
+  transform:translateY(-4px);
+}
+.btn:active{
+  transform:translateY(-1px) scale(.98);
+}
+.btn::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(105deg,transparent 20%,rgba(255,255,255,.16) 48%,transparent 70%);
+  transform:translateX(-130%);
+  transition:transform .65s cubic-bezier(.16,1,.3,1);
+  pointer-events:none;
+}
+.btn:hover::before{
+  transform:translateX(130%);
+}
+
+/* A very short cinematic wipe between destinations. */
+.nav-transition{
+  pointer-events:none;
+}
+.nav-transition.is-active{
+  animation:navWipe .72s cubic-bezier(.76,0,.24,1) forwards;
+}
+@keyframes navWipe{
+  0%{clip-path:inset(0 100% 0 0);opacity:1}
+  45%{clip-path:inset(0 0 0 0);opacity:1}
+  100%{clip-path:inset(0 0 0 100%);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  .btn,.btn:hover,.btn:active{transition:none;transform:none}
+  .nav-transition{display:none!important}
+}
