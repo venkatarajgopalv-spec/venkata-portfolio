@@ -915,61 +915,77 @@ function initPdfLinks(){
 
 function initNav(){
 
-  const toggle =
-    document.getElementById(
-      "navToggle"
-    );
+  const toggle=document.getElementById("navToggle");
+  const nav=document.getElementById("nav");
+  const transition=document.getElementById("navTransition");
+  if(!toggle || !nav) return;
 
-  const nav =
-    document.getElementById(
-      "nav"
-    );
+  const links=[...nav.querySelectorAll("a")];
 
-  if (!toggle || !nav)
-    return;
+  function goTo(target, label){
+    if(!target) return;
 
-  toggle.addEventListener(
-    "click",
-    () => {
+    if(transition){
+      const text=transition.querySelector(".nav-transition__label");
+      if(text) text.textContent="// "+label.toUpperCase();
 
-      const isOpen =
-        nav.classList.toggle(
-          "is-open"
-        );
-
-      toggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
+      transition.classList.remove("is-active");
+      void transition.offsetWidth;
+      transition.classList.add("is-active");
     }
-  );
 
+    window.setTimeout(()=>{
+      target.scrollIntoView({behavior:"smooth",block:"start"});
+    },160);
 
-  nav
-    .querySelectorAll("a")
-    .forEach(a => {
+    window.setTimeout(()=>{
+      if(transition) transition.classList.remove("is-active");
+    },760);
+  }
 
-      a.addEventListener(
-        "click",
-        () => {
-
-          nav.classList.remove(
-            "is-open"
-          );
-
-          toggle.setAttribute(
-            "aria-expanded",
-            "false"
-          );
-
-        }
-      );
-
+  links.forEach(a=>{
+    a.addEventListener("click",(e)=>{
+      const target=document.querySelector(a.getAttribute("href"));
+      if(!target) return;
+      e.preventDefault();
+      goTo(target,a.textContent.replace(/^\d+\s*/,"").trim());
+      nav.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded","false");
     });
+  });
 
+  // Hero buttons: keep the buttons, but give each click the same cinematic transition.
+  document.querySelectorAll('.btn[href^="#"]').forEach(button=>{
+    button.addEventListener("click",(e)=>{
+      const target=document.querySelector(button.getAttribute("href"));
+      if(!target) return;
+      e.preventDefault();
+      goTo(target,button.textContent.replace("→","").trim());
+    });
+  });
+
+  // Highlight the current section in the top navigation.
+  const sections=links
+    .map(a=>document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const link=links.find(a=>a.getAttribute("href")==="#"+entry.target.id);
+        links.forEach(a=>a.classList.remove("is-active"));
+        if(link) link.classList.add("is-active");
+      }
+    });
+  },{rootMargin:"-30% 0px -60% 0px",threshold:0});
+
+  sections.forEach(section=>observer.observe(section));
+
+  toggle.addEventListener("click",()=>{
+    const isOpen=nav.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded",String(isOpen));
+  });
 }
-
 
 /* ============================================================
    CONTACT FORM
