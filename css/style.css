@@ -893,3 +893,120 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .contact__form:focus-within{box-shadow:0 0 35px rgba(79,191,184,.07)}
 @media(max-width:700px){.intro-orb{width:150px;height:150px}.intro-label{font-size:9px;letter-spacing:.1em}}
 @media(prefers-reduced-motion:reduce){.intro-visual{animation:none;display:none}}
+
+/* ============================================================
+   FINAL POLISH — PHOTO INTRO + SECTION TRANSITIONS
+   ============================================================ */
+.intro-orbit{
+  position:relative;
+  width:250px;
+  height:250px;
+  display:grid;
+  place-items:center;
+  transform-style:preserve-3d;
+  animation:introOrbIn 1.15s cubic-bezier(.16,1,.3,1) both;
+}
+.intro-photo{
+  position:relative;
+  width:112px;
+  height:112px;
+  border-radius:50%;
+  overflow:hidden;
+  border:1px solid rgba(232,163,61,.85);
+  box-shadow:0 0 35px rgba(232,163,61,.18),0 18px 50px rgba(0,0,0,.45);
+  transform:translateZ(35px);
+  background:#0a0d12;
+}
+.intro-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 20%;
+  filter:saturate(.9) contrast(1.05);
+}
+.intro-photo span{
+  position:absolute;
+  left:50%;
+  bottom:8px;
+  transform:translateX(-50%);
+  padding:3px 7px;
+  border:1px solid rgba(232,163,61,.5);
+  border-radius:20px;
+  background:rgba(10,13,18,.75);
+  color:var(--amber);
+  font:600 9px var(--mono);
+  letter-spacing:.12em;
+}
+.intro-orbit .intro-ring--1{inset:8px}
+.intro-orbit .intro-ring--2{inset:34px}
+.intro-orbit .intro-ring--3{inset:-14px}
+@keyframes introOrbIn{
+  from{opacity:0;transform:perspective(800px) rotateX(55deg) rotateY(-45deg) scale(.45)}
+  to{opacity:1;transform:perspective(800px) rotateX(0) rotateY(0) scale(1)}
+}
+
+/* Full, uncropped event photography */
+.pharma-main-card img{
+  aspect-ratio:auto !important;
+  height:auto !important;
+  object-fit:contain !important;
+}
+.pharma-photo-grid img{
+  height:auto !important;
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
+  background:var(--bg-2);
+}
+
+/* Every navigation button gets a distinct transition */
+.nav a{
+  position:relative;
+  transition:color .25s ease,transform .25s ease,letter-spacing .25s ease;
+}
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-5px;
+  height:1px;
+  background:linear-gradient(90deg,var(--amber),var(--teal));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.nav a:hover{
+  transform:translateY(-2px);
+  letter-spacing:.04em;
+}
+.nav a:hover::after,
+.nav a.is-active::after{
+  transform:scaleX(1);
+}
+.nav a.is-active{color:var(--amber)}
+
+/* Section transition: destination flashes into focus after nav click */
+.section.section-transition,
+.hero.section-transition,
+.stats-strip.section-transition{
+  animation:sectionEnter .8s cubic-bezier(.16,1,.3,1);
+}
+@keyframes sectionEnter{
+  0%{opacity:.45;filter:blur(5px);transform:translateY(24px) scale(.985)}
+  55%{opacity:1;filter:blur(0);transform:translateY(-3px) scale(1.002)}
+  100%{opacity:1;filter:none;transform:none}
+}
+
+/* Section headings get a directional reveal */
+.section__head.is-nav-enter{
+  animation:headingEnter .65s cubic-bezier(.16,1,.3,1);
+}
+@keyframes headingEnter{
+  from{opacity:0;transform:translate3d(-30px,12px,0)}
+  to{opacity:1;transform:none}
+}
+
+@media(max-width:700px){
+  .intro-orbit{width:190px;height:190px}
+  .intro-photo{width:92px;height:92px}
+}
