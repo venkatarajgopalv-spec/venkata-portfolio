@@ -1010,3 +1010,165 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .intro-orbit{width:190px;height:190px}
   .intro-photo{width:92px;height:92px}
 }
+
+/* ============================================================
+   FINAL CINEMATIC OPENING — NAME ONLY
+   ============================================================ */
+.intro-visual{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  pointer-events:none;
+  background:#070a0f;
+  animation:introFadeOut .9s 2.35s cubic-bezier(.76,0,.24,1) forwards;
+}
+.intro-vignette{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(79,191,184,.055), transparent 30%),
+    radial-gradient(circle at 50% 50%, rgba(232,163,61,.045), transparent 55%);
+}
+.intro-name-wrap{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  transform:translateY(12px);
+  animation:introNameIn 1.05s .18s cubic-bezier(.16,1,.3,1) both;
+}
+.intro-kicker{
+  margin:0 0 18px;
+  color:var(--amber);
+  font:500 11px var(--mono);
+  letter-spacing:.28em;
+  opacity:0;
+  animation:introKickerIn .7s .25s ease-out forwards;
+}
+.intro-name{
+  margin:0;
+  color:var(--text);
+  font-family:var(--display);
+  font-size:clamp(36px,7vw,82px);
+  font-weight:700;
+  letter-spacing:.12em;
+  line-height:.95;
+  white-space:nowrap;
+  text-shadow:0 0 34px rgba(233,231,222,.08);
+  clip-path:inset(0 100% 0 0);
+  animation:introNameClip 1.15s .38s cubic-bezier(.16,1,.3,1) forwards;
+}
+.intro-role{
+  margin:18px 0 0;
+  color:var(--text-mute);
+  font:500 10px var(--mono);
+  letter-spacing:.22em;
+  opacity:0;
+  animation:introRoleIn .8s 1s ease-out forwards;
+}
+.intro-line{
+  position:absolute;
+  left:8%;
+  right:8%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(79,191,184,.5),rgba(232,163,61,.5),transparent);
+  transform:scaleX(0);
+}
+.intro-line--top{top:31%;transform-origin:left;animation:introLineIn .9s .05s cubic-bezier(.16,1,.3,1) forwards}
+.intro-line--bottom{bottom:31%;transform-origin:right;animation:introLineIn .9s .25s cubic-bezier(.16,1,.3,1) forwards}
+.intro-sweep{
+  position:absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  width:2px;
+  background:linear-gradient(180deg,transparent,var(--teal),var(--amber),transparent);
+  box-shadow:0 0 24px rgba(79,191,184,.35);
+  transform:translateX(-20vw);
+  animation:introSweep 1.55s 1.05s cubic-bezier(.76,0,.24,1) forwards;
+}
+@keyframes introNameIn{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes introKickerIn{to{opacity:1}}
+@keyframes introNameClip{to{clip-path:inset(0 0 0 0)}}
+@keyframes introRoleIn{to{opacity:1}}
+@keyframes introLineIn{to{transform:scaleX(1)}}
+@keyframes introSweep{from{transform:translateX(-20vw)}to{transform:translateX(120vw)}}
+@keyframes introFadeOut{
+  0%{opacity:1;visibility:visible}
+  65%{opacity:1}
+  100%{opacity:0;visibility:hidden}
+}
+
+/* ============================================================
+   CINEMATIC NAVIGATION TRANSITION
+   ============================================================ */
+.nav-transition{
+  position:fixed;
+  inset:0;
+  z-index:998;
+  pointer-events:none;
+  opacity:0;
+  visibility:hidden;
+  background:
+    linear-gradient(90deg,rgba(10,13,18,.98) 0 50%,transparent 50%),
+    linear-gradient(180deg,transparent 0 49.8%,rgba(79,191,184,.65) 50%,transparent 50.2%);
+}
+.nav-transition__line{
+  position:absolute;
+  left:0;
+  right:0;
+  top:50%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--amber),var(--teal),transparent);
+  box-shadow:0 0 24px rgba(79,191,184,.25);
+  transform:scaleX(0);
+}
+.nav-transition__label{
+  position:absolute;
+  left:50%;
+  top:calc(50% + 18px);
+  transform:translateX(-50%);
+  color:var(--text-mute);
+  font:10px var(--mono);
+  letter-spacing:.18em;
+  opacity:0;
+}
+.nav-transition.is-active{
+  opacity:1;
+  visibility:visible;
+  animation:navWipe .72s cubic-bezier(.76,0,.24,1) forwards;
+}
+.nav-transition.is-active .nav-transition__line{
+  animation:navLine .72s cubic-bezier(.16,1,.3,1) forwards;
+}
+.nav-transition.is-active .nav-transition__label{
+  animation:navLabel .5s .12s ease-out forwards;
+}
+@keyframes navWipe{
+  0%{clip-path:inset(0 100% 0 0)}
+  45%{clip-path:inset(0 0 0 0)}
+  100%{clip-path:inset(0 0 0 100%)}
+}
+@keyframes navLine{to{transform:scaleX(1)}}
+@keyframes navLabel{to{opacity:1}}
+/* Prevent the old section transform from fighting the cinematic route transition. */
+.section.section-transition,
+.hero.section-transition,
+.stats-strip.section-transition{
+  animation:none !important;
+  filter:none !important;
+  transform:none !important;
+}
+.section__head.is-nav-enter{animation:none !important}
+.hero__tag,.corner-tag,.pharma-main-card figcaption{display:none !important}
+
+@media(max-width:700px){
+  .intro-name{font-size:clamp(28px,8vw,48px);letter-spacing:.08em}
+  .intro-role{font-size:8px;letter-spacing:.12em}
+}
+@media(prefers-reduced-motion:reduce){
+  .intro-visual{animation:none;display:none}
+  .nav-transition{display:none}
+}
