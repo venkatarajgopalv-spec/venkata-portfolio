@@ -1124,3 +1124,34 @@ document.addEventListener(
 
   }
 );
+
+
+/* ============================================================
+   PREMIUM INTERACTIONS
+   ============================================================ */
+function initPremiumInteractions(){
+  const cards = document.querySelectorAll(".pharma-main-card, .ledger-card, .exhibit, .skill-panel");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduced) return;
+
+  cards.forEach(card => {
+    card.addEventListener("pointermove", e => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width;
+      const y = (e.clientY - rect.top) / rect.height;
+      const rx = (0.5 - y) * 3;
+      const ry = (x - 0.5) * 4;
+      if (card.classList.contains("pharma-main-card")){
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      } else {
+        card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+      }
+    });
+    card.addEventListener("pointerleave", () => {
+      card.style.transform = "";
+    });
+  });
+}
+
+
+initPremiumInteractions();
