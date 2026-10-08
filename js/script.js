@@ -976,102 +976,37 @@ function initNav(){
    ============================================================ */
 
 function initForm(){
+  const form=document.getElementById("contactForm");
+  const status=document.getElementById("formStatus");
+  if(!form) return;
 
-  const form =
-    document.getElementById(
-      "contactForm"
-    );
+  form.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const submitBtn=form.querySelector("button[type=submit]");
+    const name=form.elements.name.value.trim();
+    const email=form.elements.email.value.trim();
+    const message=form.elements.message.value.trim();
 
-  const status =
-    document.getElementById(
-      "formStatus"
-    );
-
-  if (!form)
-    return;
-
-
-  form.addEventListener(
-    "submit",
-    async (e) => {
-
-      e.preventDefault();
-
-
-      if (
-        form.action.includes(
-          "YOUR_FORM_ID"
-        )
-      ){
-
-        status.textContent =
-          "Form isn't connected yet — please connect Formspree.";
-
-        return;
-
-      }
-
-
-      const submitBtn =
-        form.querySelector(
-          "button[type=submit]"
-        );
-
-      submitBtn.disabled = true;
-
-      status.textContent =
-        "Sending…";
-
-
-      try{
-
-        const res =
-          await fetch(
-            form.action,
-            {
-              method:"POST",
-
-              body:
-                new FormData(form),
-
-              headers:{
-                "Accept":
-                  "application/json"
-              }
-            }
-          );
-
-
-        if (res.ok){
-
-          status.textContent =
-            "Message sent — thank you! I'll get back to you soon.";
-
-          form.reset();
-
-        }else{
-
-          status.textContent =
-            "Something went wrong. Please email me directly instead.";
-
-        }
-
-      }catch(err){
-
-        status.textContent =
-          "Network error — please email me directly instead.";
-
-      }finally{
-
-        submitBtn.disabled = false;
-
-      }
-
+    if(!name || !email || !message){
+      status.textContent="Please complete all fields.";
+      return;
     }
-  );
 
+    const subject="Portfolio enquiry from "+name;
+    const body="Name: "+name+"\nEmail: "+email+"\n\nMessage:\n"+message;
+    const mailto="mailto:vrgacharya@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+
+    submitBtn.disabled=true;
+    submitBtn.textContent="Opening email…";
+    status.textContent="Opening your default email app…";
+    window.location.href=mailto;
+
+    setTimeout(()=>{
+      submitBtn.disabled=false;
+      submitBtn.textContent="Send Message";
+    },1500);
+  });
 }
-
 
 /* ============================================================
    MISC
@@ -1121,6 +1056,7 @@ document.addEventListener(
     initForm();
 
     initPremiumInteractions();
+    initIntro();
 
     setYear();
 
@@ -1155,3 +1091,9 @@ function initPremiumInteractions(){
   });
 }
 
+
+function initIntro(){
+  const intro=document.getElementById("introVisual");
+  if(!intro) return;
+  setTimeout(()=>intro.remove(),3000);
+}
