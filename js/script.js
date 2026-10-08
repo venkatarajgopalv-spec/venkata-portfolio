@@ -1120,6 +1120,8 @@ document.addEventListener(
 
     initForm();
 
+    initPremiumInteractions();
+
     setYear();
 
   }
@@ -1153,5 +1155,3 @@ function initPremiumInteractions(){
   });
 }
 
-
-initPremiumInteractions();
