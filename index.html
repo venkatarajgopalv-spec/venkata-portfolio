@@ -345,7 +345,7 @@
       </dl>
     </div>
 
-    <form class="contact__form reveal" id="contactForm" action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID" method="POST" data-reveal-delay="100">
+    <form class="contact__form reveal" id="contactForm" action="https://formsubmit.co/vrgacharya@gmail.com" method="POST" target="portfolioFormHiddenFrame" data-reveal-delay="100">
       <label>
         Name
         <input type="text" name="name" required placeholder="Your name">
@@ -358,9 +358,13 @@
         Message
         <textarea name="message" rows="5" required placeholder="What would you like to talk about?"></textarea>
       </label>
+      <input type="hidden" name="_subject" id="portfolioSubject" value="Portfolio enquiry from Venkata Raj Gopal website">
+      <input type="hidden" name="_replyto" id="portfolioReplyTo" value="">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
       <button type="submit" class="btn btn--primary btn--full">Send Message</button>
       <p class="form__status" id="formStatus" role="status"></p>
-      <p class="form__note">Your message will open in your default email app for sending.</p>
+      <p class="form__note">Your message is sent securely to my inbox. No email app will open.</p>
     </form>
   </div>
 </section>
@@ -373,7 +377,7 @@
   <a href="#top" class="to-top" aria-label="Back to top">↑</a>
 </footer>
 
-<script src="js/script.js"></script>
+<iframe name="portfolioFormHiddenFrame" id="portfolioFormHiddenFrame" style="display:none;" title="Contact form submission handler"></iframe>\n<script src="js/script.js"></script>
 <div class="nav-transition" id="navTransition" aria-hidden="true">
   <div class="nav-transition__line"></div>
   <span class="nav-transition__label">// LOADING SECTION</span>
