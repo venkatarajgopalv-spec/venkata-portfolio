@@ -1219,3 +1219,36 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .btn,.btn:hover,.btn:active{transition:none;transform:none}
   .nav-transition{display:none!important}
 }
+
+/* RESTORE ALL PRIMARY ACTION BUTTONS — keep them visible above animation layers */
+.hero__cta{
+  position:relative !important;
+  z-index:20 !important;
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  transform:none !important;
+}
+.hero__cta .btn{
+  position:relative !important;
+  z-index:21 !important;
+  display:inline-flex !important;
+  align-items:center;
+  justify-content:center;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+}
+.hero__cta .btn--primary{
+  min-width:210px;
+}
+.hero__cta .btn--ghost{
+  min-width:178px;
+}
+.hero__cta .btn--text{
+  min-width:135px;
+}
+
+/* Do not let the cinematic overlay hide the normal page after navigation. */
+.intro-visual{pointer-events:none !important;}
+.nav-transition{pointer-events:none !important;}
