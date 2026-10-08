@@ -1252,3 +1252,54 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* Do not let the cinematic overlay hide the normal page after navigation. */
 .intro-visual{pointer-events:none !important;}
 .nav-transition{pointer-events:none !important;}
+
+/* ============================================================
+   HERO VIEWPORT FIX — keep the original CTAs inside the first screen
+   ============================================================ */
+@media (min-width:901px){
+  .hero{
+    min-height:calc(100vh - 58px);
+    box-sizing:border-box;
+    padding:38px 28px 28px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .hero__inner{
+    width:100%;
+  }
+  .hero__line{
+    margin-top:8px;
+    margin-bottom:16px;
+    font-size:18px;
+  }
+  .hero__name{
+    font-size:clamp(42px,5vw,60px);
+    margin-bottom:8px;
+  }
+  .hero__role{margin-bottom:14px}
+  .hero__sub{
+    margin-bottom:22px;
+    line-height:1.55;
+  }
+  .hero__cta{
+    margin-top:0;
+  }
+  .hero__frame{
+    transform:translateY(-4px);
+  }
+  .scroll-cue{
+    margin-top:20px;
+  }
+}
+@media (min-width:901px) and (max-height:760px){
+  .hero{
+    padding-top:24px;
+    padding-bottom:18px;
+  }
+  .hero__line{font-size:17px;line-height:1.4;margin-bottom:12px}
+  .hero__name{font-size:clamp(40px,4.5vw,54px)}
+  .hero__sub{margin-bottom:18px;line-height:1.45}
+  .hero__frame .hero__img{width:min(330px,100%)}
+  .scroll-cue{display:none}
+}
