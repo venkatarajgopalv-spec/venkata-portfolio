@@ -992,35 +992,79 @@ function initNav(){
    ============================================================ */
 
 function initForm(){
+
   const form=document.getElementById("contactForm");
   const status=document.getElementById("formStatus");
   if(!form) return;
 
-  form.addEventListener("submit",(e)=>{
-    e.preventDefault();
+  const frame=document.getElementById("portfolioFormHiddenFrame");
+
+  let pending=false;
+  let fallbackTimer=null;
+
+  function showSuccess(){
+    if(!pending) return;
+    pending=false;
+    clearTimeout(fallbackTimer);
     const submitBtn=form.querySelector("button[type=submit]");
+    if(submitBtn){
+      submitBtn.disabled=false;
+      submitBtn.textContent="Message Sent ✓";
+    }
+    status.textContent="Message sent successfully. Thank you for reaching out!";
+    status.classList.add("is-success");
+    form.reset();
+  }
+
+  // FormSubmit posts into a hidden iframe, so the visitor stays on the portfolio
+  // page and no Gmail/Outlook/default email application is opened.
+  if(frame){
+    frame.addEventListener("load",()=>{
+      if(pending) showSuccess();
+    });
+  }
+
+  form.addEventListener("submit",(e)=>{
     const name=form.elements.name.value.trim();
     const email=form.elements.email.value.trim();
     const message=form.elements.message.value.trim();
 
+    status.classList.remove("is-success");
+
     if(!name || !email || !message){
+      e.preventDefault();
       status.textContent="Please complete all fields.";
       return;
     }
 
-    const subject="Portfolio enquiry from "+name;
-    const body="Name: "+name+"\nEmail: "+email+"\n\nMessage:\n"+message;
-    const mailto="mailto:vrgacharya@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+    const submitBtn=form.querySelector("button[type=submit]");
+    const subject=document.getElementById("portfolioSubject");
+    const replyTo=document.getElementById("portfolioReplyTo");
 
-    submitBtn.disabled=true;
-    submitBtn.textContent="Opening email…";
-    status.textContent="Opening your default email app…";
-    window.location.href=mailto;
+    if(subject) subject.value="Portfolio enquiry from "+name;
+    if(replyTo) replyTo.value=email;
 
-    setTimeout(()=>{
-      submitBtn.disabled=false;
-      submitBtn.textContent="Send Message";
-    },1500);
+    if(submitBtn){
+      submitBtn.disabled=true;
+      submitBtn.textContent="Sending…";
+    }
+    status.textContent="Sending your message…";
+    pending=true;
+
+    clearTimeout(fallbackTimer);
+    fallbackTimer=setTimeout(()=>{
+      if(pending){
+        pending=false;
+        if(submitBtn){
+          submitBtn.disabled=false;
+          submitBtn.textContent="Send Message";
+        }
+        status.textContent="We couldn't confirm the submission. Please try again.";
+      }
+    },8000);
+
+    // IMPORTANT: do not preventDefault here.
+    // The native POST goes to FormSubmit and targets the hidden iframe.
   });
 }
 
